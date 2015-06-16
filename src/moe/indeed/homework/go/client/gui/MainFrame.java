@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
     final Object finishLock = new Object();
     private boolean finishRequested = false;
     private boolean finishMode = false;
-    private final JLabel status = new JLabel("LOADING");
+    private final JLabel status = new JLabel("LOADING GAME");
     public boolean isOwnTurn() {
         return ownTurn;
     }
@@ -58,6 +58,7 @@ public class MainFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (finishMode) {
                     try {
+                        status.setText("END");
                         OUTGOING.put("END");
                         engine.get_winner();
                         JOptionPane.showMessageDialog(MainFrame.this, "Winner is " + (engine.getWinner() == 1 ? "black" : "white") + ", score is " + engine.getScore() * 2, "Result", JOptionPane.INFORMATION_MESSAGE);
@@ -154,14 +155,14 @@ public class MainFrame extends JFrame {
                                 synchronized (finishLock) {
                                     if (finishRequested) {
                                         finishMode = true;
-                                        status.setText("REMOVE MODE");
+                                        status.setText("REMOVE");
                                     } else {
                                         SwingUtilities.invokeLater(new Runnable() {
                                             @Override
                                             public void run() {
                                                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(MainFrame.this, "Do you think you have finished playing?", "Ending Request", JOptionPane.YES_NO_OPTION)) {
                                                     finishMode = true;
-                                                    status.setText("REMOVE MODE");
+                                                    status.setText("REMOVE");
                                                     try {
                                                         OUTGOING.put("FINISH");
                                                     } catch (InterruptedException e) {

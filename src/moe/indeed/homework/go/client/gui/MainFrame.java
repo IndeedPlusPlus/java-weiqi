@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
@@ -19,6 +21,7 @@ public class MainFrame extends JFrame {
     private boolean finishRequested = false;
     private boolean finishMode = false;
     private final JLabel status = new JLabel("LOADING GAME");
+
     public boolean isOwnTurn() {
         return ownTurn;
     }
@@ -53,6 +56,15 @@ public class MainFrame extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
         final JButton end = new JButton("End");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.addWindowListener(
+                new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        super.windowClosed(e);
+                        System.exit(1);
+                    }
+                });
         end.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -211,6 +223,15 @@ public class MainFrame extends JFrame {
                                     }
                                 });
                             }
+                        } else if (message instanceof Exception) {
+                            final Exception exception = (Exception) message;
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JOptionPane.showMessageDialog(MainFrame.this, exception.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                                    System.exit(2);
+                                }
+                            });
                         }
                     }
                 } catch (InterruptedException ignored) {

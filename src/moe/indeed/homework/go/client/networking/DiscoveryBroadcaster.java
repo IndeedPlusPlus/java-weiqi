@@ -7,15 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DiscoveryBroadcaster extends Thread {
+    final static int DISCOVERY_PORT = 13787;
+    final static int INTERVAL = 1000;
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    private String content;
     public DiscoveryBroadcaster(ThreadGroup group, String name, String content) {
         super(group, name);
         this.content = content;
     }
-
-    private String content;
-    final static int DISCOVERY_PORT = 13787;
-    final static int INTERVAL = 1000;
-    private final Logger LOGGER = Logger.getLogger(getClass().getName());
 
     public DiscoveryBroadcaster(String content) {
         super("discovery-broadcaster");

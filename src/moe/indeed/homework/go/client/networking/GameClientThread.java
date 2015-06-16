@@ -10,9 +10,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 public class GameClientThread extends Thread {
-    private InetAddress target;
     public static final int GAME_PORT = 13788;
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
+    private InetAddress target;
 
     public GameClientThread(String name, InetAddress target) {
         super(name);

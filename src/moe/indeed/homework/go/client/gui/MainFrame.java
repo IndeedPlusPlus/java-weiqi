@@ -13,39 +13,15 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 public class MainFrame extends JFrame {
-    private GoEngine engine = new GoEngine();
+    final Object finishLock = new Object();
     private final BlockingQueue<Object> OUTGOING = MessageBus.getInstance().getOrCreateChannel("OUTGOING");
     private final BlockingQueue<Object> CHANNEL = MessageBus.getInstance().getOrCreateChannel("GAME");
     private final GoBoard board;
-    final Object finishLock = new Object();
+    private final JLabel status = new JLabel("LOADING GAME");
+    private GoEngine engine = new GoEngine();
     private boolean finishRequested = false;
     private boolean finishMode = false;
-    private final JLabel status = new JLabel("LOADING GAME");
-
-    public boolean isOwnTurn() {
-        return ownTurn;
-    }
-
-    public void setOwnTurn(final boolean ownTurn) {
-        this.ownTurn = ownTurn;
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                status.setText(ownTurn ? "YOUR TURN" : "WAIT");
-            }
-        });
-    }
-
     private boolean ownTurn = false;
-
-    public boolean isCanDeleteTiles() {
-        return canDeleteTiles;
-    }
-
-    public void setCanDeleteTiles(boolean canDeleteTiles) {
-        this.canDeleteTiles = canDeleteTiles;
-    }
-
     private boolean canDeleteTiles;
 
     public MainFrame() {
@@ -134,6 +110,28 @@ public class MainFrame extends JFrame {
             }
 
         });
+    }
+
+    public boolean isOwnTurn() {
+        return ownTurn;
+    }
+
+    public void setOwnTurn(final boolean ownTurn) {
+        this.ownTurn = ownTurn;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                status.setText(ownTurn ? "YOUR TURN" : "WAIT");
+            }
+        });
+    }
+
+    public boolean isCanDeleteTiles() {
+        return canDeleteTiles;
+    }
+
+    public void setCanDeleteTiles(boolean canDeleteTiles) {
+        this.canDeleteTiles = canDeleteTiles;
     }
 
     public void start() {

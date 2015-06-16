@@ -9,11 +9,6 @@ import java.util.Map;
 
 public class GoBoard extends JComponent {
 
-    public final int STATUS_BLACK = 1;
-    public final int STATUS_WHITE = 2;
-    private final int CELL_SIZE = 30;
-    private final int CIRCLE_RADIUS = 12;
-    private PutTileListener putTileListener;
     static final Point[] BOLD_POINTS = {
             new Point(3, 3),
             new Point(3, 9),
@@ -25,24 +20,12 @@ public class GoBoard extends JComponent {
             new Point(15, 9),
             new Point(15, 15)
     };
-
-    public Map<Point, Integer> getPoints() {
-        return points;
-    }
-
+    public final int STATUS_BLACK = 1;
+    public final int STATUS_WHITE = 2;
+    private final int CELL_SIZE = 30;
+    private final int CIRCLE_RADIUS = 12;
+    private PutTileListener putTileListener;
     private Map<Point, Integer> points = new HashMap<>();
-
-    public PutTileListener getPutTileListener() {
-        return putTileListener;
-    }
-
-    public void setPutTileListener(PutTileListener putTileListener) {
-        this.putTileListener = putTileListener;
-    }
-
-    public interface PutTileListener {
-        boolean titlePut(int x, int y, Map<Point, Integer> points);
-    }
 
     public GoBoard() {
         this.setPreferredSize(new Dimension(CELL_SIZE * 19, CELL_SIZE * 19));
@@ -86,6 +69,18 @@ public class GoBoard extends JComponent {
         });
     }
 
+    public Map<Point, Integer> getPoints() {
+        return points;
+    }
+
+    public PutTileListener getPutTileListener() {
+        return putTileListener;
+    }
+
+    public void setPutTileListener(PutTileListener putTileListener) {
+        this.putTileListener = putTileListener;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -107,6 +102,10 @@ public class GoBoard extends JComponent {
             g.setColor(Color.BLACK);
             g.drawArc(CELL_SIZE / 2 + CELL_SIZE * point.x - CIRCLE_RADIUS, CELL_SIZE / 2 + CELL_SIZE * point.y - CIRCLE_RADIUS, CIRCLE_RADIUS * 2, CIRCLE_RADIUS * 2, 0, 360);
         }
+    }
+
+    public interface PutTileListener {
+        boolean titlePut(int x, int y, Map<Point, Integer> points);
     }
 
 

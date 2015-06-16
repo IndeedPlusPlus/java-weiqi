@@ -5,29 +5,23 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class GoEngine {
+    final int[][] d = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     public int[][] map = new int[19][19];        //1黑棋，2白棋
     boolean[][][] control = new boolean[3][19][19];        //true表示可能被控制
     boolean[][][] vis = new boolean[3][19][19];
-    final int[][] d = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
     private int size;
-
-    public int getWinner() {
-        return winner;
-    }
-
     private int winner;
-
-    public double getScore() {
-        return score;
-    }
-
     private double score, tiezi;
-
-    public int getNum() {
-        return num;
-    }
-
     private int num;
+
+    public GoEngine() {
+        size = 19;
+        winner = 0;
+        score = 0;
+        tiezi = 3.75;
+        num = 0;
+        //dead(2, 3);
+    }
 
     public static void main(String[] args) {
         //System.out.println("haha");
@@ -46,13 +40,16 @@ public class GoEngine {
         System.out.println(alpha.score);
     }
 
-    public GoEngine() {
-        size = 19;
-        winner = 0;
-        score = 0;
-        tiezi = 3.75;
-        num = 0;
-        //dead(2, 3);
+    public int getWinner() {
+        return winner;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public int getNum() {
+        return num;
     }
 
     public boolean move(int x, int y)    //(x,y)处落子，成功则返回true

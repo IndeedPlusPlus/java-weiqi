@@ -11,12 +11,11 @@ import java.net.SocketTimeoutException;
 import java.util.logging.Logger;
 
 public class DiscoveryListener extends Thread {
+    final static int DISCOVERY_PORT = 13787;
+    private final Logger LOGGER = Logger.getLogger(getClass().getName());
     public DiscoveryListener(ThreadGroup group, String name) {
         super(group, name);
     }
-
-    final static int DISCOVERY_PORT = 13787;
-    private final Logger LOGGER = Logger.getLogger(getClass().getName());
 
     @Override
     public void run() {
@@ -42,7 +41,7 @@ public class DiscoveryListener extends Thread {
                 } catch (SocketTimeoutException ignored) {
 
                 } catch (InterruptedException e) {
-                    return ;
+                    return;
                 }
                 if (this.isInterrupted())
                     return;

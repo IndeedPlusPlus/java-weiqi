@@ -3,6 +3,9 @@ package moe.indeed.homework.go.client.data;
 import java.net.InetAddress;
 
 public class Server {
+    private InetAddress address;
+    private String name;
+
     public Server(InetAddress address, String name) {
         this.address = address;
         this.name = name;
@@ -23,9 +26,6 @@ public class Server {
     public void setName(String name) {
         this.name = name;
     }
-
-    private InetAddress address;
-    private String name;
 
     @Override
     public String toString() {

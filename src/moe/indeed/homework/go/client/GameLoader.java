@@ -1,8 +1,6 @@
 package moe.indeed.homework.go.client;
 
 import moe.indeed.homework.go.client.gui.DiscoveryFrame;
-import moe.indeed.homework.go.client.networking.DiscoveryBroadcaster;
-import moe.indeed.homework.go.client.networking.DiscoveryListener;
 
 import javax.swing.*;
 
